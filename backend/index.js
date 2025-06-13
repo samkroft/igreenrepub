@@ -29,14 +29,49 @@ app.get("/", (req, res) => {
     });
 });
 
-// use the psot request
+// use the post request
 app.post("/create", (req, res) => {
-    const sql = "INSERT into fellows (`firstName`, `LastName`, `Email`) VALUES (?)";
+    const sql = "INSERT into fellows (`FirstName`, `LastName`, `Email`) VALUES (?)";
     const values = [
-        req.body.name
+        // get the data from the fellow at frontend
+        req.body.firstname,
+        req.body.lastname,
+        req.body.email,
     ]
+    db.query(sql, [values], (err, res) => {
+        if(err) return res.json("error");
+        return res.json(data);
+    })
+});
+
+// use the update request
+app.put("/fellows", (req, res) => {
+    const sql = "UPDATE fellows set `FirstName` = ?, `LastName` = ?, `Email = ?`) where ID = ?";
+    const values = [
+        // get the data from the fellow at frontend
+        req.body.firstname,
+        req.body.lastname,
+        req.body.email,
+    ]
+
+    const id = req.params.id;
+
+    db.query(sql, [...values], (err, res) => {
+        if(err) return res.json("error");
+        return res.json(data);
+    })
+});
+
+app.delete("/fellows/:id", (req, res) => {
+    const sql = "DELETE FROM fellows WHERE ID?";
+    const id = req.params.id;
+
+    db.query(sql, [id], (err, res) => {
+        if(err) return res.json("error");
+        return res.json(data);
+    })
 });
 
 app.listen(5000, () => {
-    console.log("App is litening on port 5000");
+    console.log("App is listening on port 5000");
 });

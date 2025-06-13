@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"; 
 import { data, Link, useNavigate } from "react-router-dom";
 
-function CreateFellows(){
+function UpdateFellows(){
     // "fellows" & their parameters
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -13,7 +13,7 @@ function CreateFellows(){
     // pass data to the backend
     function handleSubmit(e) {
         e.preventDefault();
-        axios.post("localhost:6000/create", {FirstName, LastName, Email})
+        axios.post(`http://localhost:6000/Update/${id}`, { firstName, lastName, email })
         .then(res => {
             console.log(res);
             //navigate home if successful
@@ -25,22 +25,22 @@ function CreateFellows(){
         <div className="d-flex justify-content-center align-items-cneter"> 
              <div className="bg-white">
                 <form onSubmit={handleSubmit}>
-                    <h2>Create Fellow</h2>
+                    <h2>Update Fellow</h2>
                     <div>
-                        <label htmlFor="FirstName"></label>
-                        <input type="text" placeholder="Enter FirstName"
+                        <label htmlFor="firstName"></label>
+                        <input type="text" placeholder="Enter firstName"
                             onChange={e => setFirstName(e.target.value)}
                         />
                     </div>
                     <div>
-                        <label htmlFor="LastName"></label>
-                        <input type="text" placeholder="Enter LastName"
+                        <label htmlFor="lastName"></label>
+                        <input type="text" placeholder="Enter lastName"
                             onChange = {e => setLastName(e.target.value)}
                         />
                     </div>
                     <div>
-                        <label htmlFor="Email"></label>
-                        <input type="text" placeholder="Enter Email"
+                        <label htmlFor="email"></label>
+                        <input type="text" placeholder="Enter email"
                             onChange={e => setEmail(e.target.value)}
                         />
                     </div>
@@ -51,4 +51,4 @@ function CreateFellows(){
     );
 };
 
-export default CreateFellows;
+export default UpdateFellows;

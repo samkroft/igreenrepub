@@ -7,10 +7,19 @@ function Fellows(){
 
     // api call to host
     useEffect(() => {
-        axios.get("localhost:6000")
+        axios.get("https://localhost:6000)
         .then(res => setFellows.data)
         .catch(err => console.log(err))
     }, []);
+
+    const handleDelete = async (id) => {
+        try {
+            await axios.delete("https://localhost:6000/fellows", + id);
+            windows.location.reload();
+        } catch (err){
+            console.log(err);
+        }
+    } 
 
     return (
         <div className="d-flex justify-content-center align-items-cneter"> 
@@ -28,12 +37,12 @@ function Fellows(){
                         {
                             fellows.map((data, i) => (
                                 <tr key={i}>
-                                    <td>data.Firstname</td>
-                                    <td>data.Lastname</td>
-                                    <td>data.Email</td>
+                                    <td>{data.FirstName}</td>
+                                    <td>{data.Lastname}</td>
+                                    <td>{data.Email}</td>
                                     <td>
-                                        <button className="btn btn-primary"> Update </button>
-                                        <button className="btn btn-danger"> Delete </button>
+                                        <Link to = {`update/${data.id}`} className="btn btn-primary"> Update </Link>
+                                        <button className="btn btn-danger" onclick={e => handleDelete()}> Delete </button>
                                     </td>
                                 </tr>)
                             )
